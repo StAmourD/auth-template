@@ -36,7 +36,7 @@
     {/if}
   {:else}
     <h1>Please log in</h1>
-    <button on:click={loginWithGoogle}>Login with Google</button>
+    <!-- <button on:click={loginWithGoogle}>Login with Google</button> -->
     <button on:click={loginWithGitHub}>Login with GitHub</button>
   {/if}
 </main>
