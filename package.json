@@ -4,11 +4,12 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
+		"host": "vite dev --host",
 		"build": "vite build",
 		"preview": "vite preview",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
-		"start": "babel-node server.js"
+		"server": "babel-node server.js"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.22.1",
