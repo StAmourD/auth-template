@@ -1,7 +1,6 @@
 import express from 'express';
 import session from 'express-session';
 import passport from './auth.js';
-import cookieParser from 'cookie-parser';
 import { get, googleCallback, logout, githubCallback, checkAuthenticated } from './src/routes/auth.js';
 import dotenv from 'dotenv'
 
@@ -24,7 +23,6 @@ passport.deserializeUser(function(id, done) {
 });
 
 app.use(express.json());
-app.use(cookieParser());
 app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());

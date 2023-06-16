@@ -1,15 +1,15 @@
 {
 	"name": "auth-template",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
 		"host": "vite dev --host",
+		"server": "babel-node server.js",
 		"build": "vite build",
+		"dev": "vite dev",
 		"preview": "vite preview",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write .",
-		"server": "babel-node server.js"
+		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
 		"@babel/core": "^7.22.1",
@@ -18,8 +18,6 @@
 		"@esbuild-plugins/node-globals-polyfill": "^0.2.3",
 		"@esbuild-plugins/node-modules-polyfill": "^0.2.2",
 		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/adapter-node": "^1.2.4",
-		"@sveltejs/adapter-static": "^2.0.2",
 		"@sveltejs/kit": "^1.0.0-next.589",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
@@ -31,7 +29,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"cookie-parser": "^1.4.6",
 		"dotenv": "^16.1.4",
 		"express": "^4.18.2",
 		"express-session": "^1.17.3",
