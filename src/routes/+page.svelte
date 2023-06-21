@@ -33,6 +33,7 @@
     {#if user.authenticated}
       <h1>Hello {user.profile.displayName}!</h1>
       <button on:click={logout}>Logout</button>
+      <p>{user.test1}</p>
     {/if}
   {:else}
     <h1>Please log in</h1>
