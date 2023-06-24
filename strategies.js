@@ -50,9 +50,9 @@ export async function githubCallback(req, res, next) {
 
 export async function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    next()
+    next();
   } else {
-    res.json({ authenticated: false })
+    res.redirect('/'); // Redirect to homepage if not authenticated
   }
 }
 
@@ -69,13 +69,4 @@ export async function logout(req, res) {
       res.redirect('/'); // Redirect to homepage after logout
     });
   });
-}
-
-export async function loginLocal(req, res, next) {
-  console.log('test')
-  passport.authenticate('local', {
-      failureRedirect: "/login",
-      successRedirect: "/login",
-      session: true
-    })(req, res, next);
 }
