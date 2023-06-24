@@ -1,0 +1,39 @@
+<!-- src/routes/index.svelte -->
+<script>
+  import { onMount } from 'svelte';
+
+  let user;
+
+  onMount(async () => {
+    const response = await fetch('/auth/check');
+    if (response.ok) {
+      user = await response.json();
+      console.log(user)
+    }
+  });
+
+  const logout = async () => {
+    const response = await fetch('/auth/logout');
+    if (response.ok) {
+      user = null;
+    }
+  };
+</script>
+
+<main>
+  {#if user}
+    {#if user.authenticated}
+      <h1>Register Page</h1>
+      <p>Hello {user.profile.displayName}!</p>
+      <button on:click={logout}>Logout</button>
+    {:else}
+      <h1>Register Page</h1>
+      <a href="/">Home</a>
+      <form method="POST" action="/auth/register">
+        Enter Username:<br><input type="text" name="username">
+        <br>Enter Password:<br><input type="text" name="password">
+        <br><br><input type="submit" value="Submit">
+      </form>
+    {/if}
+  {/if}
+</main>

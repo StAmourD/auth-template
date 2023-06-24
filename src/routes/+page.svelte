@@ -7,6 +7,7 @@
   onMount(async () => {
     const response = await fetch('/auth/check');
     if (response.ok) {
+      console.log(await response)
       user = await response.json();
       console.log(user)
     }
@@ -34,10 +35,11 @@
       <h1>Hello {user.profile.displayName}!</h1>
       <button on:click={logout}>Logout</button>
       <p>{user.test1}</p>
+    {:else}
+      <h1>Please log in</h1>
+      <button on:click={loginWithGoogle}>Login with Google</button>
+      <button on:click={loginWithGitHub}>Login with GitHub</button>
+      <a href="/login">Login with email</a>
     {/if}
-  {:else}
-    <h1>Please log in</h1>
-    <!-- <button on:click={loginWithGoogle}>Login with Google</button> -->
-    <button on:click={loginWithGitHub}>Login with GitHub</button>
   {/if}
 </main>
