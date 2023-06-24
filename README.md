@@ -30,6 +30,7 @@ GITHUB_CLIENT_SECRET=
 GITHUB_CALLBACK_URL=http://REPLACE_ME!.ddns.net:5173/auth/github/callback
 SECRET=super_secret_string
 PROXYSERVER=http://REPLACE_ME!.ddns.net:5000
+DB_STRING=mongodb://REPLACE_ME!:27017/db-name
 ```
 
 ## Building
