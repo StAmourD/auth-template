@@ -25,23 +25,73 @@ const UserSchema = new mongoose.Schema({
   username: String,
   hash: String,
   salt: String,
+  user: Object,
+  displayName: String
 });
 
 const User = mongoose.model("User", UserSchema)
 
 // Middleware setup
 passport.serializeUser(function(user, done) {
-  // TODO persist user information to DB
-  done(null, {
-    userid: user.id,
-    user: user,
-    test1: 'test V3, a very long piece of text here.  lakjd;fklja;sdlfj kjasdfkjasd;fkljadjdjasfkljasdfkljasd;fjdkjasfjasdfkjasdfjadkjsfdjasfkljadsfjdjasfkljadsfjadjkjasdf;ajsdfkljads;fkjadfjdjasf;kjadsfkjasdfjasdfkjadfjjasdfkjasf;lajsdf;ljadsfklad;sfj;ladkjsfdkasfkjasd;fkja;dkjsfdkjasfksdfkljadsfdas'
-  });
+    // persist user information to DB
+    // TODO verify auth provider is GH here
+    User.findOne({ username: 'GH' + user.id })
+        .then((thisUser) => {
+          if (!thisUser) {
+            // TODO does null/null create a security hole
+            const newUserValues = {
+              hash: null,
+              salt: null,
+              username: 'GH' + user.id,
+              user: user,
+              displayName: user.displayName
+            }
+
+            const newUser = new User(newUserValues);
+            
+            newUser.save()
+            
+            return {
+              username: newUserValues.username,
+              user: newUserValues.user,
+              displayName: newUserValues.displayName
+            }
+          } else {
+            return {
+              username: thisUser.username,
+              user: thisUser.user,
+              displayName: thisUser.displayName
+            }
+          }
+
+        })
+        .then((user) => {
+          done(null, user);
+        })
+        .catch((err) => {
+          // should this rethrow or no catch at all?
+          done(err, false);
+        })
 });
 
 passport.deserializeUser(function(user, done) {
-  // TODO get user information from DB
-  done(null, user.userid);
+  // Get user information from DB
+  User.findOne({ username: user.username })
+    .then((thisUser) => {
+      if (thisUser) {
+        return {
+          username: thisUser.username,
+          user: thisUser.user,
+          displayName: thisUser.displayName
+        }
+      }
+    })
+  .then((user) => {
+    done(null, user);
+  })
+  .catch((err) => {
+    throw new Error(err)
+  })
 });
 
 const sessionStore = MongoStore.create({
@@ -73,7 +123,7 @@ app.get('/auth/logout', logout);
 app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ], session: true }));
 app.get('/auth/github/callback', githubCallback);
 app.get('/auth/check', checkAuthenticated, (req, res) => {
-  res.json({ authenticated: true, profile: req.session.passport.user.user, test1: req.session.passport.user.test1 });
+  res.json({ authenticated: true, profile: req.user.user, displayName: req.user.displayName });
 });
 
 // Since we are using the passport.authenticate() method, we should be redirected no matter what
@@ -100,9 +150,11 @@ app.post("/auth/register", (req, res, next) => {
         const hash = saltHash.hash;
       
         const newUser = new User({
-          username: req.body.username,
           hash: hash,
           salt: salt,
+          username: req.body.username,
+          user: req.body,
+          displayName: req.body.displayName
         });
       
         newUser.save().then((user) => {

@@ -66,8 +66,9 @@ export async function logout(req, res) {
         console.error(err);
       }
       // fetch()
-      // res.redirect('/'); // Redirect to homepage after logout
       res.json({ authenticated: false })
+      // res.redirect('/'); // Redirect to homepage after logout
+      // res.json({ authenticated: false })
     });
   });
 }

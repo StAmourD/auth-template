@@ -24,7 +24,7 @@
   const logout = async () => {
     const response = await fetch('/auth/logout');
     if (response.ok) {
-      user = null;
+      user = response.json();
     }
   };
 </script>
@@ -34,7 +34,7 @@
     {#if user.authenticated}
       <h1>Hello {user.profile.displayName}!</h1>
       <button on:click={logout}>Logout</button>
-      <p>{user.test1}</p>
+      <p>{user.displayName}</p>
     {:else}
       <h1>Please log in</h1>
       <button on:click={loginWithGoogle}>Login with Google</button>
