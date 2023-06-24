@@ -27,8 +27,7 @@
       <p>Hello {user.profile.displayName}!</p>
       <button on:click={logout}>Logout</button>
     {:else}
-      <h1>Register Page</h1>
-      <a href="/">Home</a>
+      <h1>Registration Page</h1>
       <form method="POST" action="/auth/register">
         Enter Username:<br><input type="text" name="username">
         <br>Enter Password:<br><input type="text" name="password">

@@ -73,7 +73,6 @@ export async function logout(req, res) {
 }
 
 export async function loginLocal(req, res, next) {
-  console.log('test')
   passport.authenticate('local', {
       failureRedirect: "/login",
       successRedirect: "/login",
