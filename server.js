@@ -10,6 +10,7 @@ import bodyParser from 'body-parser'
 import { Strategy as LocalStrategy  } from 'passport-local';
 
 import dotenv from 'dotenv'
+import { error } from 'console'
 
 dotenv.config({ path: './.env' })
 
@@ -85,22 +86,35 @@ app.post('/auth/login', loginLocal, (err, req, res, next) => {
 );
 
 app.post("/auth/register", (req, res, next) => {
-  const saltHash = genPassword(req.body.password);
+  // validate this is a unique user name
+  User.findOne({ username: req.body.username })
+      .then((user) => {
+        if (user) {
+          throw new Error("Username already exists.");
+        }
+      })
+      .then(() => {
+        const saltHash = genPassword(req.body.password);
+      
+        const salt = saltHash.salt;
+        const hash = saltHash.hash;
+      
+        const newUser = new User({
+          username: req.body.username,
+          hash: hash,
+          salt: salt,
+        });
+      
+        newUser.save().then((user) => {
+          console.log(user);
+        });
+      
+        res.redirect("/login");
+      })
+      .catch((err) => {
+        next(err);
+      })
 
-  const salt = saltHash.salt;
-  const hash = saltHash.hash;
-
-  const newUser = new User({
-    username: req.body.username,
-    hash: hash,
-    salt: salt,
-  });
-
-  newUser.save().then((user) => {
-    console.log(user);
-  });
-
-  res.redirect("/login");
 })
 
 // TODO Move these
