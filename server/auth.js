@@ -1,6 +1,9 @@
-import passport from 'passport';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { Strategy as GitHubStrategy } from 'passport-github2';
+import passport from 'passport'
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
+import { Strategy as GitHubStrategy } from 'passport-github2'
+import { Strategy as LocalStrategy  } from 'passport-local'
+import { validPassword } from './util.js'
+import { User } from './db.js'
 import dotenv from 'dotenv'
 
 dotenv.config({ path: './.env' })
@@ -42,6 +45,28 @@ passport.use(
       return done(null, profile)
     }
   )
+);
+
+passport.use(
+  new LocalStrategy(function (username, password, cb) {
+    User.findOne({ username: 'LO' + username })
+      .then((user) => {
+        if (!user) {
+          return cb(null, false);
+        }
+
+        const isValid = validPassword(password, user.hash, user.salt);
+
+        if (isValid) {
+          return cb(null, user);
+        } else {
+          return cb(null, false);
+        }
+      })
+      .catch((err) => {
+        cb(err);
+      });
+  })
 );
 
 export default passport;

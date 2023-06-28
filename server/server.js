@@ -2,12 +2,11 @@ import express from 'express'
 import session from 'express-session'
 import passport from './auth.js'
 import { googleCallback, githubCallback, checkAuthenticated, logout, loginLocal } from './strategies.js'
-import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
+import { genPassword } from './util.js'
+import { User } from './db.js'
 // Package documentation - https://www.npmjs.com/package/connect-mongo
 import MongoStore from 'connect-mongo'
-import crypto from 'crypto'
-import bodyParser from 'body-parser'
-import { Strategy as LocalStrategy  } from 'passport-local';
 
 import dotenv from 'dotenv'
 import { error } from 'console'
@@ -17,28 +16,25 @@ dotenv.config({ path: './.env' })
 const app = express()
 const port = 5000 // Replace with the desired port number
 
-// Database Setup
-// const connection = mongoose.createConnection(process.env.DB_STRING);
-mongoose.connect(process.env.DB_STRING).then(() => console.log('Connected to MongoDB')).catch(e => console.error(e));
-
-const UserSchema = new mongoose.Schema({
-  username: String,
-  hash: String,
-  salt: String,
-  user: Object,
-  displayName: String
-});
-
-const User = mongoose.model("User", UserSchema)
-
 // Middleware setup
 passport.serializeUser(function(user, done) {
     // persist user information to DB
     let providerPrefix = ''
-    if (user.provider === 'github') {providerPrefix = 'GH'}
-    if (user.provider === 'google') {providerPrefix = 'GO'}
-
-    User.findOne({ username: providerPrefix + user.id })
+    let username
+    if (user.provider === 'github') {
+      providerPrefix = 'GH'
+      username = providerPrefix + user.id
+    }
+    if (user.provider === 'google') {
+      providerPrefix = 'GO'
+      username = providerPrefix + user.id
+    }
+    if (user.provider === undefined) {
+      providerPrefix = ''
+      username = user.username
+    }
+    // add user to DB elsewhere, not found here is invalid password
+    User.findOne({ username: username })
         .then((thisUser) => {
           if (!thisUser) {
             // TODO does null/null create a security hole
@@ -90,6 +86,7 @@ passport.deserializeUser(function(user, done) {
       }
     })
   .then((user) => {
+    // throw an error if user is not found from session
     done(null, user);
   })
   .catch((err) => {
@@ -129,9 +126,8 @@ app.get('/auth/check', checkAuthenticated, (req, res) => {
   res.json({ authenticated: true, profile: req.user.user, displayName: req.user.displayName });
 });
 
-// Since we are using the passport.authenticate() method, we should be redirected no matter what
 app.post('/auth/login', loginLocal, (err, req, res, next) => {
-    console.log(req)
+    // console.log(req)
     if (err) {
       next(err)
     }
@@ -155,8 +151,8 @@ app.post("/auth/register", (req, res, next) => {
         const newUser = new User({
           hash: hash,
           salt: salt,
-          username: req.body.username,
-          user: req.body,
+          username: 'LO' + req.body.username,
+          user: null,
           displayName: req.body.displayName
         });
       
@@ -171,50 +167,6 @@ app.post("/auth/register", (req, res, next) => {
       })
 
 })
-
-// TODO Move these
-
-passport.use(
-  new LocalStrategy(function (username, password, cb) {
-    User.findOne({ username: username })
-      .then((user) => {
-        if (!user) {
-          return cb(null, false);
-        }
-
-        // Function defined at bottom of app.js
-        const isValid = validPassword(password, user.hash, user.salt);
-
-        if (isValid) {
-          return cb(null, user);
-        } else {
-          return cb(null, false);
-        }
-      })
-      .catch((err) => {
-        cb(err);
-      });
-  })
-);
-
-function validPassword(password, hash, salt) {
-  var hashVerify = crypto
-    .pbkdf2Sync(password, salt, 10000, 64, "sha512")
-    .toString("hex");
-  return hash === hashVerify;
-}
-
-function genPassword(password) {
-  var salt = crypto.randomBytes(32).toString("hex");
-  var genHash = crypto
-    .pbkdf2Sync(password, salt, 10000, 64, "sha512")
-    .toString("hex");
-
-  return {
-    salt: salt,
-    hash: genHash,
-  };
-}
 
 // Start the server
 app.listen(port, () => {

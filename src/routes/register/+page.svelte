@@ -31,6 +31,7 @@
       <form method="POST" action="/auth/register">
         Enter Username:<br><input type="text" name="username">
         <br>Enter Password:<br><input type="text" name="password">
+        <br>Full Name:<br><input type="text" name="displayName">
         <br><br><input type="submit" value="Submit">
       </form>
     {/if}

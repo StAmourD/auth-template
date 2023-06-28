@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"host": "vite dev --host",
-		"server": "babel-node server.js",
+		"server": "babel-node server\\server.js",
 		"build": "vite build",
 		"dev": "vite dev",
 		"preview": "vite preview",
