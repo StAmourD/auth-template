@@ -12,11 +12,13 @@ npm run dev -- --open
 
 # or start the server accessible to the local network
 npm run dev -- --host
+# or
+npm run host
 ```
 
 ## Developing Express Server
 
-Use VS Code debug "Launch Script" or `npm run start`
+Use VS Code debug "Launch Script" or `npm run server`
 
 ## Using NoIP for OAuth Callbacks
 
