@@ -25,6 +25,9 @@ Replace ddns.net domains with domains setup at https://www.noip.com/
 
 ## .ENV
 ```
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_CALLBACK_URL=http://REPLACE_ME!.ddns.net:5173/auth/google/callback
 GITHUB_CLIENT_ID=
 GITHUB_CLIENT_SECRET=
 GITHUB_CALLBACK_URL=http://REPLACE_ME!.ddns.net:5173/auth/github/callback

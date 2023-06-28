@@ -1,7 +1,7 @@
 import express from 'express'
 import session from 'express-session'
 import passport from './auth.js'
-import { get, googleCallback, logout, githubCallback, checkAuthenticated, loginLocal } from './strategies.js'
+import { googleCallback, githubCallback, checkAuthenticated, logout, loginLocal } from './strategies.js'
 import mongoose from 'mongoose'
 // Package documentation - https://www.npmjs.com/package/connect-mongo
 import MongoStore from 'connect-mongo'
@@ -34,15 +34,18 @@ const User = mongoose.model("User", UserSchema)
 // Middleware setup
 passport.serializeUser(function(user, done) {
     // persist user information to DB
-    // TODO verify auth provider is GH here
-    User.findOne({ username: 'GH' + user.id })
+    let providerPrefix = ''
+    if (user.provider === 'github') {providerPrefix = 'GH'}
+    if (user.provider === 'google') {providerPrefix = 'GO'}
+
+    User.findOne({ username: providerPrefix + user.id })
         .then((thisUser) => {
           if (!thisUser) {
             // TODO does null/null create a security hole
             const newUserValues = {
               hash: null,
               salt: null,
-              username: 'GH' + user.id,
+              username: providerPrefix + user.id,
               user: user,
               displayName: user.displayName
             }
@@ -117,7 +120,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.get('/auth/google', get);
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
 app.get('/auth/google/callback', googleCallback);
 app.get('/auth/logout', logout);
 app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ], session: true }));

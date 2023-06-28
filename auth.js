@@ -5,9 +5,9 @@ import dotenv from 'dotenv'
 
 dotenv.config({ path: './.env' })
 
-const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
-const GOOGLE_CLIENT_SECRET = 'YOUR_GOOGLE_CLIENT_SECRET';
-const GOOGLE_CALLBACK_URL = '/auth/google/callback';
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
+const GOOGLE_CALLBACK_URL = process.env.GOOGLE_CALLBACK_URL
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET
@@ -22,9 +22,10 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       // Handle the user's Google authentication data as needed
-      User.findOrCreate({ githubId: profile.id }, function (err, user) {
-        return done(err, user);
-      });
+      // User.findOrCreate({ githubId: profile.id }, function (err, user) {
+      //   return done(err, user);
+      // });
+      return done(null, profile)
     }
   )
 );

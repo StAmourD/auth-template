@@ -1,9 +1,5 @@
 import passport from 'passport';
 
-export async function get(req, res, next) {
-  passport.authenticate('google', { scope: ['profile'] })(req, res, next);
-}
-
 export async function googleCallback(req, res, next) {
   passport.authenticate('google', (err, user) => {
     if (err) {
