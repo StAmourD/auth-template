@@ -45,11 +45,15 @@ export async function githubCallback(req, res, next) {
 }
 
 export async function loginLocal(req, res, next) {
-  passport.authenticate('local', {
-      failureRedirect: "/login",
-      successRedirect: "/login",
-      session: true
-    })(req, res, next);
+  passport.authenticate('local', function (err, user) {
+      if (!user) {
+        res.status(401).send({ authenticated: false, message: 'Invalid username or password.'})
+      } else {
+        req.logIn(user, function() {
+            res.status(err ? 401 : 200).send(err ? { authenticated: false } : { authenticated: true, displayName: user.displayName, profile: null })
+        });
+      }
+  })(req, res, next);
 }
 
 export async function checkAuthenticated(req, res, next) {

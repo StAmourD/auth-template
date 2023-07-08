@@ -126,13 +126,7 @@ app.get('/auth/check', checkAuthenticated, (req, res) => {
   res.json({ authenticated: true, profile: req.user.user, displayName: req.user.displayName });
 });
 
-app.post('/auth/login', loginLocal, (err, req, res, next) => {
-    // console.log(req)
-    if (err) {
-      next(err)
-    }
-  }
-);
+app.post('/auth/login', loginLocal)
 
 app.post("/auth/register", (req, res, next) => {
   // validate this is a unique user name
