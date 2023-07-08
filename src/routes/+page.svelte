@@ -32,9 +32,8 @@
 <main>
   {#if user}
     {#if user.authenticated}
-      <h1>Hello {user.profile.displayName}!</h1>
+      <h1>Hello {user.displayName}!</h1>
       <button on:click={logout}>Logout</button>
-      <p>{user.displayName}</p>
     {:else}
       <h1>Please log in</h1>
       <button on:click={loginWithGoogle}>Login with Google</button>

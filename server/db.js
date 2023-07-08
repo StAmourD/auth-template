@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
   hash: String,
   salt: String,
   user: Object,
-  displayName: String
+  githubId: String,
 });
 
 export const User = mongoose.model("User", UserSchema)

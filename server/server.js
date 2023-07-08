@@ -17,81 +17,14 @@ const app = express()
 const port = 5000 // Replace with the desired port number
 
 // Middleware setup
-passport.serializeUser(function(user, done) {
-    // persist user information to DB
-    let providerPrefix = ''
-    let username
-    if (user.provider === 'github') {
-      providerPrefix = 'GH'
-      username = providerPrefix + user.id
-    }
-    if (user.provider === 'google') {
-      providerPrefix = 'GO'
-      username = providerPrefix + user.id
-    }
-    if (user.provider === undefined) {
-      providerPrefix = ''
-      username = user.username
-    }
-    // add user to DB elsewhere, not found here is invalid password
-    User.findOne({ username: username })
-        .then((thisUser) => {
-          if (!thisUser) {
-            // TODO does null/null create a security hole
-            const newUserValues = {
-              hash: null,
-              salt: null,
-              username: providerPrefix + user.id,
-              user: user,
-              displayName: user.displayName
-            }
-
-            const newUser = new User(newUserValues);
-            
-            newUser.save()
-            
-            return {
-              username: newUserValues.username,
-              user: newUserValues.user,
-              displayName: newUserValues.displayName
-            }
-          } else {
-            return {
-              username: thisUser.username,
-              user: thisUser.user,
-              displayName: thisUser.displayName
-            }
-          }
-
-        })
-        .then((user) => {
-          done(null, user);
-        })
-        .catch((err) => {
-          // should this rethrow or no catch at all?
-          done(err, false);
-        })
+passport.serializeUser((user, done) => {
+  done(null, user.id);
 });
 
-passport.deserializeUser(function(user, done) {
-  // Get user information from DB
-  User.findOne({ username: user.username })
-    .then((thisUser) => {
-      if (thisUser) {
-        return {
-          username: thisUser.username,
-          user: thisUser.user,
-          displayName: thisUser.displayName
-        }
-      }
-    })
-  .then((user) => {
-    // throw an error if user is not found from session
-    done(null, user);
-  })
-  .catch((err) => {
-    throw new Error(err)
-  })
+passport.deserializeUser((id, done) => {
+  User.findById(id).then((user) => {
+      done(null, user);
+  });
 });
 
 const sessionStore = MongoStore.create({
@@ -123,7 +56,7 @@ app.get('/auth/logout', logout);
 app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ], session: true }));
 app.get('/auth/github/callback', githubCallback);
 app.get('/auth/check', checkAuthenticated, (req, res) => {
-  res.json({ authenticated: true, profile: req.user.user, displayName: req.user.displayName });
+  res.json({ authenticated: true, displayName: req.user.username });
 });
 
 app.post('/auth/login', loginLocal)

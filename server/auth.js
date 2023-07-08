@@ -42,7 +42,23 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       // Handle the user's GitHub authentication data as needed
-      return done(null, profile)
+      // return done(null, profile)
+      User.findOne({githubId: profile.id}).then((currentUser) => {
+        if(currentUser){
+            // already have this user
+            console.log('user is: ', currentUser);
+            done(null, currentUser);
+        } else {
+            // if not, create user in our db
+            new User({
+                githubId: profile.id,
+                username: profile.displayName
+            }).save().then((newUser) => {
+                console.log('created new user: ', newUser);
+                done(null, newUser);
+            });
+        }
+    });
     }
   )
 );
