@@ -50,7 +50,7 @@ export async function loginLocal(req, res, next) {
         res.status(401).send({ authenticated: false, message: 'Invalid username or password.'})
       } else {
         req.logIn(user, function() {
-            res.status(err ? 401 : 200).send(err ? { authenticated: false } : { authenticated: true, displayName: user.displayName, profile: null })
+            res.status(err ? 401 : 200).send(err ? { authenticated: false } : { authenticated: true, displayname: user.displayname })
         });
       }
   })(req, res, next);

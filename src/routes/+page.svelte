@@ -33,7 +33,7 @@
 <main>
   {#if user}
     {#if user.authenticated}
-      <h1>Hello {user.displayName}!</h1>
+      <h1>Hello {user.displayname}!</h1>
       <button on:click={logout}>Logout</button>
     {:else}
       <h1>Please log in</h1>

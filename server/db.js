@@ -8,6 +8,7 @@ mongoose.connect(process.env.DB_STRING).then(() => console.log('Connected to Mon
 
 const UserSchema = new mongoose.Schema({
   username: String,
+  displayname: String,
   hash: String,
   salt: String,
   user: Object,

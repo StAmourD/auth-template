@@ -24,15 +24,15 @@
   {#if user}
     {#if user.authenticated}
       <h1>Register Page</h1>
-      <p>Hello {user.displayName}!</p>
+      <p>Hello {user.displayname}!</p>
       <button on:click={logout}>Logout</button>
     {:else}
       <h1>Registration Page</h1>
       <form method="POST" action="/auth/register">
         Enter Username:<br><input type="text" name="username">
         <br>Enter Password:<br><input type="text" name="password">
-        <br>Full Name:<br><input type="text" name="displayName">
         <br><br><input type="submit" value="Submit">
+        <br>Full Name:<br><input type="text" name="displayname">
       </form>
     {/if}
   {/if}

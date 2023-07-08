@@ -38,7 +38,7 @@ passport.use(
             // if not, create user in our db
             new User({
                 googleId: profile.id,
-                username: profile.displayName
+                displayname: profile.displayName
             }).save().then((newUser) => {
                 console.log('created new user: ', newUser);
                 done(null, newUser);
@@ -68,7 +68,7 @@ passport.use(
             // if not, create user in our db
             new User({
                 githubId: profile.id,
-                username: profile.displayName
+                displayname: profile.displayName
             }).save().then((newUser) => {
                 console.log('created new user: ', newUser);
                 done(null, newUser);

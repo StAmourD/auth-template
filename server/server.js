@@ -56,7 +56,7 @@ app.get('/auth/logout', logout);
 app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ], session: true }));
 app.get('/auth/github/callback', githubCallback);
 app.get('/auth/check', checkAuthenticated, (req, res) => {
-  res.json({ authenticated: true, displayName: req.user.username });
+  res.json({ authenticated: true, displayname: req.user.displayname });
 });
 
 app.post('/auth/login', loginLocal)
