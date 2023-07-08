@@ -80,24 +80,27 @@ passport.use(
 );
 
 passport.use(
-  new LocalStrategy(function (username, password, cb) {
-    User.findOne({ username: 'LO' + username })
-      .then((user) => {
-        if (!user) {
-          return cb(null, false);
-        }
-
-        const isValid = validPassword(password, user.hash, user.salt);
-
-        if (isValid) {
-          return cb(null, user);
+  new LocalStrategy(function (username, password, done) {
+    User.findOne({username: username})
+      .then((currentUser) => {
+        if(currentUser){
+            // already have this user
+            console.log('user is: ', currentUser)
+            const isValid = validPassword(password, currentUser.hash, currentUser.salt)
+            if (isValid) {
+              done(null, currentUser)
+            } else {
+              done(new Error("Invalid username or password."), false)
+            }
         } else {
-          return cb(null, false);
+            // invalid username
+            console.log('user not found: ', username)
+            done(new Error("Invalid username or password."), false)
         }
       })
       .catch((err) => {
-        cb(err);
-      });
+        done(err, false)
+      })
   })
 );
 

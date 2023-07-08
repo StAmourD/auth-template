@@ -1,9 +1,8 @@
 import express from 'express'
 import session from 'express-session'
 import passport from './auth.js'
-import { googleCallback, githubCallback, checkAuthenticated, logout, loginLocal } from './strategies.js'
+import { googleCallback, githubCallback, checkAuthenticated, logout, loginLocalRegister, loginLocal } from './strategies.js'
 import bodyParser from 'body-parser'
-import { genPassword } from './util.js'
 import { User } from './db.js'
 // Package documentation - https://www.npmjs.com/package/connect-mongo
 import MongoStore from 'connect-mongo'
@@ -61,39 +60,7 @@ app.get('/auth/check', checkAuthenticated, (req, res) => {
 
 app.post('/auth/login', loginLocal)
 
-app.post("/auth/register", (req, res, next) => {
-  // validate this is a unique user name
-  User.findOne({ username: req.body.username })
-      .then((user) => {
-        if (user) {
-          throw new Error("Username already exists.");
-        }
-      })
-      .then(() => {
-        const saltHash = genPassword(req.body.password);
-      
-        const salt = saltHash.salt;
-        const hash = saltHash.hash;
-      
-        const newUser = new User({
-          hash: hash,
-          salt: salt,
-          username: 'LO' + req.body.username,
-          user: null,
-          displayName: req.body.displayName
-        });
-      
-        newUser.save().then((user) => {
-          console.log(user);
-        });
-      
-        res.redirect("/login");
-      })
-      .catch((err) => {
-        next(err);
-      })
-
-})
+app.post("/auth/register", loginLocalRegister)
 
 // Start the server
 app.listen(port, () => {
