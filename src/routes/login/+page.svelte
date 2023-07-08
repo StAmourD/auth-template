@@ -1,6 +1,7 @@
 <!-- src/routes/index.svelte -->
 <script>
   import { onMount } from 'svelte'
+  import { toast } from '@zerodevx/svelte-toast'
 
   let user;
 
@@ -23,6 +24,15 @@
     if (response.ok) {
       user = await response.json()
       console.log(user)
+    } else {
+      user = await response.json()
+      console.log(user)
+      toast.push(user.message,{
+        theme: {
+          '--toastBarHeight': 0
+        },
+        duration: 5000
+      })
     }
   };
   
@@ -39,7 +49,7 @@
   {#if user}
     {#if user.authenticated}
       <h1>Login Page</h1>
-      <p>Hello {user.displayName}!</p>
+      <p>Hello {user.displayname}!</p>
       <button on:click={logout}>Logout</button>
     {:else}
       <h1>Login Page</h1>

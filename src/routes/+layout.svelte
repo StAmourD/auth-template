@@ -1,5 +1,8 @@
 <script>
+  import { SvelteToast } from '@zerodevx/svelte-toast'
   let user;
+
+  const toastOptions = {}
 
   const logout = async () => {
     const response = await fetch('/auth/logout')
@@ -15,5 +18,7 @@
   <a href="/register">Register</a>
   <button on:click={logout}>Logout</button>
 </nav>
+
+<SvelteToast {toastOptions} />
 
 <slot></slot>
