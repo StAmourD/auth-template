@@ -15,9 +15,7 @@
   const onSubmit = async () => {
     const data = new FormData(document.getElementById("login-form"));
     const payload = new URLSearchParams(data)
-    // var data = new FormData(form);
-    console.log(data)
-    alert(1)
+
     const response = await fetch('/auth/login',{
       method: "POST",
       body: payload
@@ -27,11 +25,12 @@
       console.log(user)
     }
   };
-
+  
   const logout = async () => {
     const response = await fetch('/auth/logout');
     if (response.ok) {
       user = response.json();
+      console.log(user)
     }
   };
 </script>
@@ -44,7 +43,6 @@
       <button on:click={logout}>Logout</button>
     {:else}
       <h1>Login Page</h1>
-      <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
       <a href="/">Home</a>
       <form id="login-form">
         Enter Username:<br><input type="text" name="username">
