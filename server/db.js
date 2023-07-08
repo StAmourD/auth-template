@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema({
   salt: String,
   user: Object,
   githubId: String,
+  googleId: String,
 });
 
 export const User = mongoose.model("User", UserSchema)
