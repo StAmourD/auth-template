@@ -2,9 +2,10 @@
   let user;
 
   const logout = async () => {
-    const response = await fetch('/auth/logout');
+    const response = await fetch('/auth/logout')
     if (response.ok) {
-      user = response.json();
+      user = response.json()
+      console.log(user)
     }
   };
 </script>

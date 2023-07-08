@@ -14,17 +14,18 @@
   });
 
   const loginWithGoogle = () => {
-    window.location.href = '/auth/google'; // Redirect to the Google OAuth login page
+    window.location.href = '/auth/google'
   };
 
   const loginWithGitHub = () => {
-    window.location.href = '/auth/github'; // Redirect to the GitHub OAuth login page
+    window.location.href = '/auth/github'
   };
 
   const logout = async () => {
-    const response = await fetch('/auth/logout');
+    const response = await fetch('/auth/logout')
     if (response.ok) {
-      user = response.json();
+      user = response.json()
+      console.log(user)
     }
   };
 </script>
