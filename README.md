@@ -26,6 +26,7 @@ Setup port forwarding on local router for ports 5000 (Express Server) and 5173 (
 Replace ddns.net domains with domains setup at https://www.noip.com/
 
 ## .ENV
+
 ```
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=

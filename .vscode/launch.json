@@ -26,10 +26,10 @@
       "webRoot": "${workspaceFolder}"
     }
   ],
-	"compounds": [
-		{
-			"name": "All",
-			"configurations": ["Run Server", "Run Host", "Run Dev Svelte"]
-		}
-	]
+  "compounds": [
+    {
+      "name": "All",
+      "configurations": ["Run Server", "Run Host", "Run Dev Svelte"]
+    }
+  ]
 }

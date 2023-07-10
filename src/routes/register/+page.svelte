@@ -8,21 +8,21 @@
     const response = await fetch('/auth/check');
     if (response.ok) {
       user = await response.json();
-      console.log(user)
+      console.log(user);
     }
   });
 
   const onSubmit = async () => {
-    const data = new FormData(document.getElementById("register-form"));
-    const payload = new URLSearchParams(data)
+    const data = new FormData(document.getElementById('register-form'));
+    const payload = new URLSearchParams(data);
 
-    const response = await fetch('/auth/register',{
-      method: "POST",
-      body: payload
-    })
+    const response = await fetch('/auth/register', {
+      method: 'POST',
+      body: payload,
+    });
     if (response.ok) {
-      user = await response.json()
-      console.log(user)
+      user = await response.json();
+      console.log(user);
     }
   };
 
@@ -43,10 +43,10 @@
     {:else}
       <h1>Registration Page</h1>
       <form id="register-form">
-        Enter Username:<br><input type="text" name="username">
-        <br>Enter Password:<br><input type="text" name="password">
-        <br>Full Name:<br><input type="text" name="displayname">
-        <br><br><button on:click={onSubmit}>Submit</button>
+        Enter Username:<br /><input type="text" name="username" />
+        <br />Enter Password:<br /><input type="text" name="password" />
+        <br />Full Name:<br /><input type="text" name="displayname" />
+        <br /><br /><button on:click={onSubmit}>Submit</button>
       </form>
     {/if}
   {/if}

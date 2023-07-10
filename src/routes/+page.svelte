@@ -7,25 +7,25 @@
   onMount(async () => {
     const response = await fetch('/auth/check');
     if (response.ok) {
-      console.log(await response)
+      console.log(await response);
       user = await response.json();
-      console.log(user)
+      console.log(user);
     }
   });
 
   const loginWithGoogle = () => {
-    window.location.href = '/auth/google'
+    window.location.href = '/auth/google';
   };
 
   const loginWithGitHub = () => {
-    window.location.href = '/auth/github'
+    window.location.href = '/auth/github';
   };
 
   const logout = async () => {
-    const response = await fetch('/auth/logout')
+    const response = await fetch('/auth/logout');
     if (response.ok) {
-      user = response.json()
-      console.log(user)
+      user = response.json();
+      console.log(user);
     }
   };
 </script>

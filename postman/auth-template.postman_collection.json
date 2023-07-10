@@ -1,179 +1,147 @@
 {
-	"info": {
-		"_postman_id": "f47dd593-63a1-4246-93a1-a8695f04c490",
-		"name": "auth-template",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "3061482"
-	},
-	"item": [
-		{
-			"name": "Login",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://0auth.ddns.net:5173/auth/login?username=11&password=11",
-					"protocol": "http",
-					"host": [
-						"0auth",
-						"ddns",
-						"net"
-					],
-					"port": "5173",
-					"path": [
-						"auth",
-						"login"
-					],
-					"query": [
-						{
-							"key": "username",
-							"value": "11"
-						},
-						{
-							"key": "password",
-							"value": "11"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Check",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://0auth.ddns.net:5173/auth/check",
-					"protocol": "http",
-					"host": [
-						"0auth",
-						"ddns",
-						"net"
-					],
-					"port": "5173",
-					"path": [
-						"auth",
-						"check"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Logout",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://0auth.ddns.net:5173/auth/logout",
-					"protocol": "http",
-					"host": [
-						"0auth",
-						"ddns",
-						"net"
-					],
-					"port": "5173",
-					"path": [
-						"auth",
-						"logout"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Check with Github",
-			"request": {
-				"auth": {
-					"type": "oauth2",
-					"oauth2": [
-						{
-							"key": "clientSecret",
-							"value": "{{github_clientSecret}}",
-							"type": "string"
-						},
-						{
-							"key": "clientId",
-							"value": "{{github_clientID}}",
-							"type": "string"
-						},
-						{
-							"key": "scope",
-							"value": "user:email",
-							"type": "string"
-						},
-						{
-							"key": "tokenName",
-							"value": "Github 0auth-template",
-							"type": "string"
-						},
-						{
-							"key": "accessTokenUrl",
-							"value": "https://github.com/login/oauth/access_token",
-							"type": "string"
-						},
-						{
-							"key": "authUrl",
-							"value": "https://github.com/login/oauth/authorize",
-							"type": "string"
-						},
-						{
-							"key": "redirect_uri",
-							"value": "http://0auth.ddns.net:5173/auth/github/callback",
-							"type": "string"
-						},
-						{
-							"key": "useBrowser",
-							"value": false,
-							"type": "boolean"
-						},
-						{
-							"key": "addTokenTo",
-							"value": "header",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://0auth.ddns.net:5173/auth/check",
-					"protocol": "http",
-					"host": [
-						"0auth",
-						"ddns",
-						"net"
-					],
-					"port": "5173",
-					"path": [
-						"auth",
-						"check"
-					]
-				},
-				"description": "\\*WIP\\*"
-			},
-			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	]
+  "info": {
+    "_postman_id": "f47dd593-63a1-4246-93a1-a8695f04c490",
+    "name": "auth-template",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "3061482"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://0auth.ddns.net:5173/auth/login?username=11&password=11",
+          "protocol": "http",
+          "host": ["0auth", "ddns", "net"],
+          "port": "5173",
+          "path": ["auth", "login"],
+          "query": [
+            {
+              "key": "username",
+              "value": "11"
+            },
+            {
+              "key": "password",
+              "value": "11"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://0auth.ddns.net:5173/auth/check",
+          "protocol": "http",
+          "host": ["0auth", "ddns", "net"],
+          "port": "5173",
+          "path": ["auth", "check"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://0auth.ddns.net:5173/auth/logout",
+          "protocol": "http",
+          "host": ["0auth", "ddns", "net"],
+          "port": "5173",
+          "path": ["auth", "logout"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Check with Github",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": [
+            {
+              "key": "clientSecret",
+              "value": "{{github_clientSecret}}",
+              "type": "string"
+            },
+            {
+              "key": "clientId",
+              "value": "{{github_clientID}}",
+              "type": "string"
+            },
+            {
+              "key": "scope",
+              "value": "user:email",
+              "type": "string"
+            },
+            {
+              "key": "tokenName",
+              "value": "Github 0auth-template",
+              "type": "string"
+            },
+            {
+              "key": "accessTokenUrl",
+              "value": "https://github.com/login/oauth/access_token",
+              "type": "string"
+            },
+            {
+              "key": "authUrl",
+              "value": "https://github.com/login/oauth/authorize",
+              "type": "string"
+            },
+            {
+              "key": "redirect_uri",
+              "value": "http://0auth.ddns.net:5173/auth/github/callback",
+              "type": "string"
+            },
+            {
+              "key": "useBrowser",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://0auth.ddns.net:5173/auth/check",
+          "protocol": "http",
+          "host": ["0auth", "ddns", "net"],
+          "port": "5173",
+          "path": ["auth", "check"]
+        },
+        "description": "\\*WIP\\*"
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ]
 }

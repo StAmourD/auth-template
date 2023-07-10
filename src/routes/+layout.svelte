@@ -1,17 +1,18 @@
 <script>
-  import { SvelteToast } from '@zerodevx/svelte-toast'
+  import { SvelteToast } from '@zerodevx/svelte-toast';
   let user;
 
-  const toastOptions = {}
+  const toastOptions = {};
 
   const logout = async () => {
-    const response = await fetch('/auth/logout')
+    const response = await fetch('/auth/logout');
     if (response.ok) {
-      user = response.json()
-      console.log(user)
+      user = response.json();
+      console.log(user);
     }
   };
 </script>
+
 <nav>
   <a href="/">Home</a>
   <a href="/login">Login</a>
@@ -21,4 +22,4 @@
 
 <SvelteToast {toastOptions} />
 
-<slot></slot>
+<slot />
