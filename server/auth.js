@@ -25,10 +25,6 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       // Handle the user's Google authentication data as needed
-      // User.findOrCreate({ githubId: profile.id }, function (err, user) {
-      //   return done(err, user);
-      // });
-      // return done(null, profile)
       User.findOne({googleId: profile.id}).then((currentUser) => {
         if(currentUser){
             // already have this user
@@ -90,6 +86,7 @@ passport.use(
             if (isValid) {
               done(null, currentUser)
             } else {
+              console.log('invalid password: ', username)
               done(new Error("Invalid username or password."), false)
             }
         } else {
