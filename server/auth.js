@@ -56,7 +56,6 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       // Handle the user's GitHub authentication data as needed
-      // return done(null, profile)
       User.findOne({ githubId: profile.id }).then((currentUser) => {
         if (currentUser) {
           // already have this user
@@ -94,7 +93,7 @@ passport.use(
             done(new Error('Invalid username or password.'), false);
           }
         } else {
-          // invalid username
+          // invalid username, use register route for new user creation
           console.log('user not found: ', username);
           done(new Error('Invalid username or password.'), false);
         }

@@ -69,10 +69,9 @@ export async function loginLocalRegister(req, res, next) {
 
       newUser.save().then((user) => {
         console.log(user);
+        // log user in after account creation
         loginLocal(req, res, next);
       });
-
-      // res.redirect("/login");
     })
     .catch((err) => {
       next(err);
@@ -114,10 +113,7 @@ export async function logout(req, res) {
       if (err) {
         console.error(err);
       }
-      // fetch()
       res.json({ authenticated: false });
-      // res.redirect('/'); // Redirect to homepage after logout
-      // res.json({ authenticated: false })
     });
   });
 }

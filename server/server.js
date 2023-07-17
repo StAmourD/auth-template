@@ -11,7 +11,6 @@ import {
 } from './strategies.js';
 import bodyParser from 'body-parser';
 import { User } from './db.js';
-// Package documentation - https://www.npmjs.com/package/connect-mongo
 import MongoStore from 'connect-mongo';
 
 import dotenv from 'dotenv';
@@ -19,7 +18,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: './.env' });
 
 const app = express();
-const port = 5000; // Replace with the desired port number
+const port = 5000;
 
 // Middleware setup
 passport.serializeUser((user, done) => {
@@ -33,7 +32,6 @@ passport.deserializeUser((id, done) => {
 });
 
 const sessionStore = MongoStore.create({
-  // mongooseConnection: connection,
   mongoUrl: process.env.DB_STRING,
   collection: 'sessions',
 });
