@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { thisUser } from '$lib/store.js';
+  import LogoutButton from '$lib/logout-button.svelte';
 
   onMount(async () => {
     const response = await fetch('/auth/check');
@@ -21,13 +22,6 @@
       thisUser.set(await response.json());
     }
   };
-
-  const logout = async () => {
-    const response = await fetch('/auth/logout');
-    if (response.ok) {
-      thisUser.set(await response.json());
-    }
-  };
 </script>
 
 <main>
@@ -35,7 +29,7 @@
     {#if $thisUser.authenticated}
       <h1>Register Page</h1>
       <p>Hello {$thisUser.displayname}!</p>
-      <button on:click={logout}>Logout</button>
+      <LogoutButton />
     {:else}
       <h1>Registration Page</h1>
       <form id="register-form">

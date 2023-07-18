@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { toast } from '@zerodevx/svelte-toast';
   import { thisUser } from '$lib/store.js';
+  import LogoutButton from '$lib/logout-button.svelte';
 
   onMount(async () => {
     const response = await fetch('/auth/check');
@@ -31,13 +32,6 @@
       });
     }
   };
-
-  const logout = async () => {
-    const response = await fetch('/auth/logout');
-    if (response.ok) {
-      thisUser.set(await response.json());
-    }
-  };
 </script>
 
 <main>
@@ -46,7 +40,7 @@
     {#if $thisUser.authenticated}
       <h1>Login Page</h1>
       <p>Hello {$thisUser.displayname}!</p>
-      <button on:click={logout}>Logout</button>
+      <LogoutButton />
     {:else}
       <h1>Login Page</h1>
       <a href="/">Home</a>

@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { thisUser } from '$lib/store.js';
+  import LogoutButton from '$lib/logout-button.svelte';
 
   onMount(async () => {
     const response = await fetch('/auth/check');
@@ -16,13 +17,6 @@
   const loginWithGitHub = () => {
     window.location.href = '/auth/github';
   };
-
-  const logout = async () => {
-    const response = await fetch('/auth/logout');
-    if (response.ok) {
-      thisUser.set(await response.json());
-    }
-  };
 </script>
 
 <main>
@@ -30,7 +24,7 @@
   {#if $thisUser}
     {#if $thisUser.authenticated}
       <h1>Hello {$thisUser.displayname}!</h1>
-      <button on:click={logout}>Logout</button>
+      <LogoutButton />
     {:else}
       <h1>Please log in</h1>
       <button on:click={loginWithGoogle}>Login with Google</button>
