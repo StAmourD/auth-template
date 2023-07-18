@@ -22,7 +22,6 @@
 <main>
   {#if $thisUser?.authenticated !== undefined && $thisUser?.authenticated === true}
     <h1>Hello {$thisUser.displayname}!</h1>
-    <LogoutButton />
   {:else}
     <h1>Please log in</h1>
     <button on:click={loginWithGoogle}>Login with Google</button>

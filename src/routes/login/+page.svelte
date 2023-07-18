@@ -38,7 +38,6 @@
   {#if $thisUser?.authenticated !== undefined && $thisUser?.authenticated === true}
     <h1>Login Page</h1>
     <p>Hello {$thisUser.displayname}!</p>
-    <LogoutButton />
   {:else}
     <h1>Login Page</h1>
     <form id="login-form">

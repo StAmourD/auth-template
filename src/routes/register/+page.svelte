@@ -28,7 +28,6 @@
   {#if $thisUser?.authenticated !== undefined && $thisUser?.authenticated === true}
     <h1>Register Page</h1>
     <p>Hello {$thisUser.displayname}!</p>
-    <LogoutButton />
   {:else}
     <h1>Registration Page</h1>
     <form id="register-form">
