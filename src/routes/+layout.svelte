@@ -16,7 +16,6 @@
     <a href="/login">Login</a>
     <a href="/register">Register</a>
   {/if}
-  <p>thisUser: {$thisUser.displayname}</p>
 </nav>
 
 <SvelteToast {toastOptions} />

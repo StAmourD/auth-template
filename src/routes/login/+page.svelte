@@ -35,8 +35,6 @@
 </script>
 
 <main>
-  <p>page thisUser: {$thisUser.displayname}</p>
-      <a href="/">Home</a>
   {#if $thisUser?.authenticated !== undefined && $thisUser?.authenticated === true}
     <h1>Login Page</h1>
     <p>Hello {$thisUser.displayname}!</p>

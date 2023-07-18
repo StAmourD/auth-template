@@ -20,7 +20,6 @@
 </script>
 
 <main>
-  <p>page thisUser: {$thisUser.displayname}</p>
   {#if $thisUser?.authenticated !== undefined && $thisUser?.authenticated === true}
     <h1>Hello {$thisUser.displayname}!</h1>
     <LogoutButton />
