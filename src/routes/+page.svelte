@@ -21,15 +21,13 @@
 
 <main>
   <p>page thisUser: {$thisUser.displayname}</p>
-  {#if $thisUser}
-    {#if $thisUser.authenticated}
-      <h1>Hello {$thisUser.displayname}!</h1>
-      <LogoutButton />
-    {:else}
-      <h1>Please log in</h1>
-      <button on:click={loginWithGoogle}>Login with Google</button>
-      <button on:click={loginWithGitHub}>Login with GitHub</button>
-      <a href="/login">Login with email</a>
-    {/if}
+  {#if $thisUser?.authenticated !== undefined && $thisUser?.authenticated === true}
+    <h1>Hello {$thisUser.displayname}!</h1>
+    <LogoutButton />
+  {:else}
+    <h1>Please log in</h1>
+    <button on:click={loginWithGoogle}>Login with Google</button>
+    <button on:click={loginWithGitHub}>Login with GitHub</button>
+    <a href="/login">Login with Email</a>
   {/if}
 </main>

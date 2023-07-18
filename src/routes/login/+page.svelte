@@ -36,19 +36,17 @@
 
 <main>
   <p>page thisUser: {$thisUser.displayname}</p>
-  {#if $thisUser}
-    {#if $thisUser.authenticated}
-      <h1>Login Page</h1>
-      <p>Hello {$thisUser.displayname}!</p>
-      <LogoutButton />
-    {:else}
-      <h1>Login Page</h1>
       <a href="/">Home</a>
-      <form id="login-form">
-        Enter Username:<br /><input type="text" name="username" />
-        <br />Enter Password:<br /><input type="password" name="password" />
-        <br /><br /><button on:click={onSubmit}>Submit</button>
-      </form>
-    {/if}
+  {#if $thisUser?.authenticated !== undefined && $thisUser?.authenticated === true}
+    <h1>Login Page</h1>
+    <p>Hello {$thisUser.displayname}!</p>
+    <LogoutButton />
+  {:else}
+    <h1>Login Page</h1>
+    <form id="login-form">
+      Enter Username:<br /><input type="text" name="username" />
+      <br />Enter Password:<br /><input type="password" name="password" />
+      <br /><br /><button on:click={onSubmit}>Submit</button>
+    </form>
   {/if}
 </main>

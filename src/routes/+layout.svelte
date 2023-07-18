@@ -10,13 +10,11 @@
 
 <nav>
   <a href="/">Home</a>
-  {#if $thisUser}
-    {#if $thisUser.authenticated}
-      <LogoutButton />
-    {:else}
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-    {/if}
+  {#if $thisUser?.authenticated !== undefined && $thisUser?.authenticated === true}
+    <LogoutButton />
+  {:else}
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
   {/if}
   <p>thisUser: {$thisUser.displayname}</p>
 </nav>

@@ -25,19 +25,17 @@
 </script>
 
 <main>
-  {#if $thisUser}
-    {#if $thisUser.authenticated}
-      <h1>Register Page</h1>
-      <p>Hello {$thisUser.displayname}!</p>
-      <LogoutButton />
-    {:else}
-      <h1>Registration Page</h1>
-      <form id="register-form">
-        Enter Username:<br /><input type="text" name="username" />
-        <br />Enter Password:<br /><input type="text" name="password" />
-        <br />Full Name:<br /><input type="text" name="displayname" />
-        <br /><br /><button on:click={onSubmit}>Submit</button>
-      </form>
-    {/if}
+  {#if $thisUser?.authenticated !== undefined && $thisUser?.authenticated === true}
+    <h1>Register Page</h1>
+    <p>Hello {$thisUser.displayname}!</p>
+    <LogoutButton />
+  {:else}
+    <h1>Registration Page</h1>
+    <form id="register-form">
+      Enter Username:<br /><input type="text" name="username" />
+      <br />Enter Password:<br /><input type="text" name="password" />
+      <br />Full Name:<br /><input type="text" name="displayname" />
+      <br /><br /><button on:click={onSubmit}>Submit</button>
+    </form>
   {/if}
 </main>
