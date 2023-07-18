@@ -24,7 +24,7 @@
       thisUser.set(await response.json());
     } else {
       thisUser.set(await response.json());
-      toast.push(user.message, {
+      toast.push($thisUser.message, {
         theme: {
           '--toastBarHeight': 0,
         },
