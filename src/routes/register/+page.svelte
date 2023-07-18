@@ -1,14 +1,11 @@
-<!-- src/routes/index.svelte -->
 <script>
   import { onMount } from 'svelte';
-
-  let user;
+  import { thisUser } from '$lib/store.js';
 
   onMount(async () => {
     const response = await fetch('/auth/check');
     if (response.ok) {
-      user = await response.json();
-      console.log(user);
+      thisUser.set(await response.json());
     }
   });
 
@@ -21,24 +18,23 @@
       body: payload,
     });
     if (response.ok) {
-      user = await response.json();
-      console.log(user);
+      thisUser.set(await response.json());
     }
   };
 
   const logout = async () => {
     const response = await fetch('/auth/logout');
     if (response.ok) {
-      user = response.json();
+      thisUser.set(await response.json());
     }
   };
 </script>
 
 <main>
-  {#if user}
-    {#if user.authenticated}
+  {#if $thisUser}
+    {#if $thisUser.authenticated}
       <h1>Register Page</h1>
-      <p>Hello {user.displayname}!</p>
+      <p>Hello {$thisUser.displayname}!</p>
       <button on:click={logout}>Logout</button>
     {:else}
       <h1>Registration Page</h1>

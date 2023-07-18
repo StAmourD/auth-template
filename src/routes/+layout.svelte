@@ -1,16 +1,17 @@
 <script>
   import { SvelteToast } from '@zerodevx/svelte-toast';
-  let user;
+  import { thisUser } from '$lib/store.js';
 
   const toastOptions = {};
 
   const logout = async () => {
     const response = await fetch('/auth/logout');
     if (response.ok) {
-      user = response.json();
-      console.log(user);
+      thisUser.set(await response.json());
     }
   };
+
+  $: console.log($thisUser);
 </script>
 
 <nav>
@@ -18,6 +19,7 @@
   <a href="/login">Login</a>
   <a href="/register">Register</a>
   <button on:click={logout}>Logout</button>
+  <p>thisUser: {$thisUser.displayname}</p>
 </nav>
 
 <SvelteToast {toastOptions} />
