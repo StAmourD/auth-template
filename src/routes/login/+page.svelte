@@ -12,7 +12,8 @@
     }
   });
 
-  const onSubmit = async () => {
+  const onSubmit = async (event) => {
+    event.preventDefault();
     const data = new FormData(document.getElementById('login-form'));
     const payload = new URLSearchParams(data);
 
