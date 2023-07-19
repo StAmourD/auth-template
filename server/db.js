@@ -16,6 +16,8 @@ const UserSchema = new mongoose.Schema({
   user: Object,
   githubId: String,
   googleId: String,
+  color: String,
+  petcount: String,
 });
 
 export const User = mongoose.model('User', UserSchema);

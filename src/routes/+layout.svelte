@@ -11,6 +11,7 @@
 <nav>
   <a href="/">Home</a>
   {#if $thisUser?.authenticated !== undefined && $thisUser?.authenticated === true}
+    <a href="/profile">Profile</a>
     <LogoutButton />
   {:else}
     <a href="/login">Login</a>

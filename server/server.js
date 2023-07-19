@@ -9,6 +9,7 @@ import {
   loginLocalRegister,
   loginLocal,
 } from './strategies.js';
+import { getProfile, postProfile } from './profile.js';
 import bodyParser from 'body-parser';
 import { User } from './db.js';
 import MongoStore from 'connect-mongo';
@@ -64,6 +65,17 @@ app.get('/auth/check', checkAuthenticated, (req, res) => {
 
 app.post('/auth/register', loginLocalRegister);
 app.post('/auth/login', loginLocal);
+
+// Protected routes
+app.get('/auth/profile', checkAuthenticated, getProfile, (req, res) => {
+  res.json({
+    authenticated: true,
+    displayname: req.profile.displayname,
+    color: req.profile.color,
+    petcount: req.profile.petcount,
+  });
+});
+app.post('/auth/profile', checkAuthenticated, postProfile);
 
 // Start the server
 app.listen(port, () => {
